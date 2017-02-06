@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/06 19:16:41 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/06 19:43:33 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct	s_cplex
 	double	im;
 }				t_cplex;
 
-void	mandlebrot(void *mlx_ptr, void *win)
+void	mandlebrot(void *mlx_ptr, void *win, double zoom, int iter)
 {
 	void	*img;
 	int		bits;
@@ -38,24 +38,24 @@ void	mandlebrot(void *mlx_ptr, void *win)
 	img = mlx_new_image(mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	buff = (int (*)[WIN_WIDTH])mlx_get_data_addr(img, &bits, &size, &endian);
 
-	step = 4 / (double)WIN_HEIGHT;
-	c.im = -2;
-	while (c.im < 2)
+	step = zoom * 2 / (double)WIN_HEIGHT;
+	c.im = - zoom;
+	while (c.im < zoom)
 	{
-		c.real = -2;
-		while (c.real < 2)
+		c.real = -zoom;
+		while (c.real < zoom)
 		{
 			it = 0;
 			z = (t_cplex){0, 0};
-			while (z.real * z.real + z.im * z.im < 4 && it < 10)
+			while (z.real * z.real + z.im * z.im < 4 && it < iter)
 			{
 				swap = z.real * z.real - z.im * z.im + c.real;
 				z.im = z.real * z.im + z.im * z.real + c.im;
 				z.real = swap;
 				it++;
 			}
-			if (it != 10)
-				buff[(int)(c.im / step) + WIN_HEIGHT/ 2][(int)(c.real / step) + (WIN_HEIGHT/2)] = 0x00FFFFFF / 10 * it;
+			if (it != iter)
+				buff[(int)(c.im / step) + WIN_HEIGHT/ 2][(int)(c.real / step) + (WIN_HEIGHT/2)] = 0x00FFFFFF / iter * it;
 			c.real += step;
 		}
 		c.im += step;
@@ -72,7 +72,7 @@ int		main(int argc, char **argv)
 	window = mlx_new_window(mlx_ptr, WIN_WIDTH, WIN_HEIGHT,
 			"fractol");
 	mlx_do_key_autorepeaton(mlx_ptr);
-	mandlebrot(mlx_ptr, window);
+	mandlebrot(mlx_ptr, window, 2, 1000);
 	mlx_loop(mlx_ptr);
 	return (0);
 }
