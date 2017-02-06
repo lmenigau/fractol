@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/06 19:43:33 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/06 19:47:29 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int		main(int argc, char **argv)
 	window = mlx_new_window(mlx_ptr, WIN_WIDTH, WIN_HEIGHT,
 			"fractol");
 	mlx_do_key_autorepeaton(mlx_ptr);
-	mandlebrot(mlx_ptr, window, 2, 1000);
+	mandlebrot(mlx_ptr, window, 2, 100);
+	mandlebrot(mlx_ptr, window, 3, 100);
 	mlx_loop(mlx_ptr);
 	return (0);
 }
