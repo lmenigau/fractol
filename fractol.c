@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/08 16:19:35 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/08 17:12:57 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 #define WIN(x)		(int)(x) + WIN_HEIGHT / 2
 #define WHITE		0x00FFFFFF
 
-void	mandlebrot(int		(*buff)[WIN_WIDTH], double zoom, int iter)
+void	mandlebrot(int (*buff)[WIN_WIDTH], double zoom, double step, int iter)
 {
-	double	step;
 	double	swap;
 	t_cplex	c;
 	t_cplex	z;
 	int		it;
 
-	step = zoom * 2 / (double)WIN_HEIGHT;
 	c.im = - zoom;
 	while (c.im < zoom)
 	{
@@ -46,6 +44,37 @@ void	mandlebrot(int		(*buff)[WIN_WIDTH], double zoom, int iter)
 	}
 }
 
+void	julia(int (*buff)[WIN_WIDTH], double zoom, double step, int iter)
+{
+	double	swap;
+	t_cplex	z;
+	t_cplex	c;
+	t_cplex	s;
+	int		it;
+
+	c = (t_cplex){0.5, 0.5};
+	z.im = - zoom;
+	while (z.im < zoom)
+	{
+		z.real = -zoom;
+		while (z.real < zoom)
+		{
+			it = -1;
+			s = z;
+			while (s.real * s.real + s.im * s.im < 4 && ++it < iter)
+			{
+				swap = s.real * s.real - s.im * s.im + c.real;
+				s.im = s.real * s.im + s.im * s.real + c.im;
+				s.real = swap;
+			}
+			if (iter != it)
+				buff[WIN(z.im / step)][WIN(z.real / step)] = WHITE / iter * it;
+			z.real += step;
+		}
+		z.im += step;
+	}
+}
+
 void	render(void *mlx_ptr, void *win)
 {
 	int		(*buff)[WIN_WIDTH];
@@ -56,7 +85,8 @@ void	render(void *mlx_ptr, void *win)
 
 	img = mlx_new_image(mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	buff = (int (*)[WIN_WIDTH])mlx_get_data_addr(img, &bits, &size, &endian);
-	mandlebrot(buff, 2, 100);
+//	mandlebrot(buff, 2, 2 * 2 / (double)WIN_HEIGHT, 100);
+	julia(buff, 2, 2 * 2 / (double)WIN_HEIGHT, 100);
 	mlx_put_image_to_window(mlx_ptr, win, img, 0, 0);
 }
 
