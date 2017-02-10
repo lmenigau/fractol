@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 15:55:29 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/10 20:21:36 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/10 23:36:49 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,26 @@
 
 # include <stdlib.h>
 # include <mlx.h>
-# define WIN_WIDTH		1000
-# define WIN_HEIGHT		1000
-
+# define WIN_WIDTH		800
+# define WIN_HEIGHT		800
 # define ABS(x)		((x) < 0 ? (-(x)): (x))
 # define WIN(x)		(int)(x + WIN_HEIGHT / 2)
 # define WHITE		0x00FFFFFF
 
 # define RGB		(0xFF * it /iter)
-# define COL		(RGB) | (RGB * 2 << 8) | (RGB * 6<< 16)
+# define COL		(RGB) | (RGB * 3 << 8) | (RGB * 6<< 16)
 
 typedef struct	s_cplex
 {
 	double	real;
 	double	im;
 }				t_cplex;
+
+typedef struct	s_vec2
+{
+	int		x;
+	int		y;
+}				t_vec2;
 
 typedef enum	e_fractol
 {

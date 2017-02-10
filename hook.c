@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 21:40:53 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/10 20:44:59 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/10 23:18:00 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 int		 motion_hook(int x, int y, t_state *state)
 {
-	state->c.real = (x - WIN_HEIGHT / 2) / (double)WIN_HEIGHT * state->zoom * 2
+	state->c.real = (x ) / (double)WIN_HEIGHT * state->zoom
 		+ state->center.real;
-	state->c.im = (y - WIN_HEIGHT / 2) / (double)WIN_HEIGHT * state->zoom * 2 +
+	state->c.im = (y ) / (double)WIN_HEIGHT * state->zoom +
 		state->center.im;
 	render(state);
 	return (0);
@@ -73,10 +73,8 @@ int		mouse_hook(int button, int x, int y, t_state *state)
 	}
 	else
 		return (0);
-	a.real = (x - WIN_HEIGHT / (double)2) / (double)WIN_HEIGHT * state->zoom *
-		2 + state->center.real;
-	a.im = (y - WIN_HEIGHT / (double)2) / (double)WIN_HEIGHT * state->zoom * 2
-		+ state->center.im;
+	a.real = (x) / (double)WIN_HEIGHT * state->zoom + state->center.real;
+	a.im = (y) / (double)WIN_HEIGHT * state->zoom + state->center.im;
 	state->zoom *= zoom;
 	z = state->center;
 	z.real = zoom * (z.real - a.real) + a.real;

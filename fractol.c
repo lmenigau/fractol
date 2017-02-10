@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/10 20:22:21 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/10 23:49:59 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@ void	mandlebrot(t_state *state, double zoom, double step, int iter)
 	t_cplex	c;
 	t_cplex	z;
 	int		it;
+	t_vec2	xy;
 
-	c.im = state->center.im - zoom - step;
-	while ((c.im += step) < state->center.im + zoom)
+	xy.y = -1;
+	while (++xy.y < WIN_HEIGHT)
 	{
-		c.real = state->center.real - zoom;
-		while (c.real < state->center.real + zoom)
+		xy.x = -1;
+		while (++xy.x < WIN_HEIGHT)
 		{
 			it = -1;
+			c.im = xy.y / (double)WIN_HEIGHT *zoom + state->center.im;
+			c.real = xy.x / (double)WIN_HEIGHT * zoom  + state->center.real;
 			z = (t_cplex){0, 0};
 			while (z.real * z.real + z.im * z.im < 4 && ++it < iter)
 			{
@@ -35,9 +38,7 @@ void	mandlebrot(t_state *state, double zoom, double step, int iter)
 				z.real = swap;
 			}
 			if (iter != it)
-				state->buff[WIN((c.im - state->center.im) / step)]
-					[WIN((c.real - state->center.real) / step)] = COL;
-			c.real += step;
+				state->buff[xy.y] [xy.x] = COL;
 		}
 	}
 }
@@ -48,15 +49,17 @@ void	julia(t_state *state, double zoom, double step, int iter)
 	t_cplex	z;
 	t_cplex	s;
 	int		it;
+	t_vec2	xy;
 
-	z.im = state->center.im - zoom;
-	while ((z.im += step) < state->center.im + zoom)
+	xy.y = -1;
+	while (++xy.y < WIN_HEIGHT)
 	{
-		z.real = state->center.real - zoom;
-		while (z.real < state->center.real + zoom)
+		xy.x = -1;
+		while (++xy.x < WIN_HEIGHT)
 		{
 			it = -1;
-			s = z;
+			s.im = (xy.y) / (double)WIN_HEIGHT *zoom + state->center.im;
+			s.real = (xy.x) / (double)WIN_HEIGHT * zoom  + state->center.real;
 			while (s.real * s.real + s.im * s.im < 4 && ++it < iter)
 			{
 				swap = s.real * s.real - s.im * s.im + state->c.real;
@@ -64,9 +67,7 @@ void	julia(t_state *state, double zoom, double step, int iter)
 				s.real = swap;
 			}
 			if (iter != it)
-				state->buff[WIN((z.im - state->center.im) / step)]
-				[WIN((z.real - state->center.real) / step)] = COL;
-			z.real += step;
+				state->buff[xy.y] [xy.x] = COL;
 		}
 	}
 }
@@ -77,14 +78,17 @@ void	burning_sheep(t_state *state, double zoom, double step, int iter)
 	t_cplex	c;
 	t_cplex	z;
 	int		it;
+	t_vec2	xy;
 
-	c.im = state->center.im - zoom;
-	while ((c.im += step) < state->center.im + zoom)
+	xy.y = -1;
+	while (++xy.y < WIN_HEIGHT)
 	{
-		c.real = state->center.real - zoom;
-		while (c.real < state->center.real + zoom)
+		xy.x = -1;
+		while (++xy.x < WIN_HEIGHT)
 		{
 			it = -1;
+			c.im = xy.y / (double)WIN_HEIGHT *zoom + state->center.im;
+			c.real = xy.x / (double)WIN_HEIGHT * zoom  + state->center.real;
 			z = (t_cplex){0, 0};
 			while (z.real * z.real + z.im * z.im < 4 && ++it < iter)
 			{
@@ -93,9 +97,7 @@ void	burning_sheep(t_state *state, double zoom, double step, int iter)
 				z.real = swap;
 			}
 			if (iter != it)
-				state->buff[WIN((c.im - state->center.im) / step)]
-				[WIN((c.real - state->center.real) / step)] = COL;
-			c.real += step;
+				state->buff[xy.y] [xy.x] = COL;
 		}
 	}
 }
@@ -111,7 +113,8 @@ void	render(t_state *state)
 	img = mlx_new_image(state->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	state->buff = (int (*)[WIN_WIDTH])mlx_get_data_addr(img, &bits, &size,
 			&endian);
-	step = 2 * state->zoom / (double)WIN_HEIGHT;
+	step = (2 * state->zoom) / (double)WIN_HEIGHT ;
+	printf("%d\n", state->iter);
 	if (state->fractol == Mandlebrot)
 		mandlebrot(state, state->zoom, step, state->iter);
 	else if (state->fractol == Julia)
@@ -133,7 +136,7 @@ int		main(int argc, char **argv)
 	state.zoom = 2;
 	state.topleft = (t_cplex) {-state.zoom , -state.zoom};
 	state.botright = (t_cplex) {state.zoom, state.zoom};
-	state.center = (t_cplex) {0, 0};
+	state.center = (t_cplex) {-1, -1};
 	state.fractol = Mandlebrot;
 	state.iter = 75;
 	mlx_do_key_autorepeaton(state.mlx_ptr);
