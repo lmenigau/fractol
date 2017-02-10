@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 15:55:29 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/10 23:36:49 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/11 00:04:04 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define WHITE		0x00FFFFFF
 
 # define RGB		(0xFF * it /iter)
-# define COL		(RGB) | (RGB * 3 << 8) | (RGB * 6<< 16)
+# define COL		(RGB) | (RGB * 3 << 8) | (RGB * 7<< 16)
 
 typedef struct	s_cplex
 {

@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/10 23:49:59 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/10 23:59:09 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void	mandlebrot(t_state *state, double zoom, double step, int iter)
 				z.im = z.real * z.im + z.im * z.real + c.im;
 				z.real = swap;
 			}
-			if (iter != it)
-				state->buff[xy.y] [xy.x] = COL;
+			(it != iter) ? state->buff[xy.y] [xy.x] = COL : (1);
 		}
 	}
 }
@@ -66,8 +65,7 @@ void	julia(t_state *state, double zoom, double step, int iter)
 				s.im = s.real * s.im + s.im * s.real + state->c.im;
 				s.real = swap;
 			}
-			if (iter != it)
-				state->buff[xy.y] [xy.x] = COL;
+			(it != iter) ? state->buff[xy.y] [xy.x] = COL : (1);
 		}
 	}
 }
@@ -96,8 +94,7 @@ void	burning_sheep(t_state *state, double zoom, double step, int iter)
 				z.im = ABS(z.real * z.im)+ ABS(z.im * z.real) + c.im;
 				z.real = swap;
 			}
-			if (iter != it)
-				state->buff[xy.y] [xy.x] = COL;
+			(it != iter) ? state->buff[xy.y] [xy.x] = COL : (1);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 21:40:53 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/10 23:18:00 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/11 00:00:45 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 
 int		 motion_hook(int x, int y, t_state *state)
 {
-	state->c.real = (x ) / (double)WIN_HEIGHT * state->zoom
-		+ state->center.real;
-	state->c.im = (y ) / (double)WIN_HEIGHT * state->zoom +
-		state->center.im;
+	state->c.real = (x) / (double)WIN_HEIGHT * state->zoom + state->center.real;
+	state->c.im = (y ) / (double)WIN_HEIGHT * state->zoom + state->center.im;
 	render(state);
 	return (0);
 }
@@ -61,12 +59,12 @@ int		mouse_hook(int button, int x, int y, t_state *state)
 	t_cplex z;
 	double zoom;
 
-	if (button == 1)
+	if (button == 1 || button == 4)
 	{
 		zoom = 2.00;
 		state->iter -= 5;
 	}
-	else if (button == 2)
+	else if (button == 2 || button == 5)
 	{
 		zoom = 0.50;
 		state->iter += 5;
