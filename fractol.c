@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/09 16:11:41 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/10 20:22:21 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	mandlebrot(t_state *state, double zoom, double step, int iter)
 	t_cplex	z;
 	int		it;
 
-	c.im = state->center.im - zoom;
-	while (c.im < state->center.im + zoom)
+	c.im = state->center.im - zoom - step;
+	while ((c.im += step) < state->center.im + zoom)
 	{
 		c.real = state->center.real - zoom;
 		while (c.real < state->center.real + zoom)
@@ -36,10 +36,9 @@ void	mandlebrot(t_state *state, double zoom, double step, int iter)
 			}
 			if (iter != it)
 				state->buff[WIN((c.im - state->center.im) / step)]
-				[WIN((c.real - state->center.real)/step)] = COL;
-		c.real += step;
+					[WIN((c.real - state->center.real) / step)] = COL;
+			c.real += step;
 		}
-		c.im += step;
 	}
 }
 
@@ -51,7 +50,7 @@ void	julia(t_state *state, double zoom, double step, int iter)
 	int		it;
 
 	z.im = state->center.im - zoom;
-	while (z.im < state->center.im + zoom)
+	while ((z.im += step) < state->center.im + zoom)
 	{
 		z.real = state->center.real - zoom;
 		while (z.real < state->center.real + zoom)
@@ -66,10 +65,9 @@ void	julia(t_state *state, double zoom, double step, int iter)
 			}
 			if (iter != it)
 				state->buff[WIN((z.im - state->center.im) / step)]
-				[WIN((z.real - state->center.real)/step)] = COL;
+				[WIN((z.real - state->center.real) / step)] = COL;
 			z.real += step;
 		}
-		z.im += step;
 	}
 }
 
@@ -80,11 +78,11 @@ void	burning_sheep(t_state *state, double zoom, double step, int iter)
 	t_cplex	z;
 	int		it;
 
-	c.im = state->topleft.im;
-	while (c.im < state->botright.im)
+	c.im = state->center.im - zoom;
+	while ((c.im += step) < state->center.im + zoom)
 	{
-		c.real = state->topleft.real;
-		while (c.real < state->botright.real)
+		c.real = state->center.real - zoom;
+		while (c.real < state->center.real + zoom)
 		{
 			it = -1;
 			z = (t_cplex){0, 0};
@@ -95,10 +93,10 @@ void	burning_sheep(t_state *state, double zoom, double step, int iter)
 				z.real = swap;
 			}
 			if (iter != it)
-				state->buff[WIN(c.im / step)][WIN(c.real / step)] = COL;
+				state->buff[WIN((c.im - state->center.im) / step)]
+				[WIN((c.real - state->center.real) / step)] = COL;
 			c.real += step;
 		}
-		c.im += step;
 	}
 }
 
@@ -108,14 +106,18 @@ void	render(t_state *state)
 	int		bits;
 	int		size;
 	int		endian;
+	double	step;
 
 	img = mlx_new_image(state->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	state->buff = (int (*)[WIN_WIDTH])mlx_get_data_addr(img, &bits, &size,
 			&endian);
-
-	mandlebrot(state, state->zoom, 2 * state->zoom / (double)WIN_HEIGHT, 200);
-	//julia(state, state->zoom, 2 * state->zoom / (double)WIN_HEIGHT, 75);
-	//burning_sheep(state, 1.5, 2 * 2 / (double)WIN_HEIGHT, 100);
+	step = 2 * state->zoom / (double)WIN_HEIGHT;
+	if (state->fractol == Mandlebrot)
+		mandlebrot(state, state->zoom, step, state->iter);
+	else if (state->fractol == Julia)
+		julia(state, state->zoom, step, state->iter);
+	else
+		burning_sheep(state, state->zoom, step, state->iter);
 	mlx_put_image_to_window(state->mlx_ptr, state->window, img, 0, 0);
 	mlx_destroy_image(state->mlx_ptr, img);
 	state->buff = NULL;
@@ -132,9 +134,13 @@ int		main(int argc, char **argv)
 	state.topleft = (t_cplex) {-state.zoom , -state.zoom};
 	state.botright = (t_cplex) {state.zoom, state.zoom};
 	state.center = (t_cplex) {0, 0};
+	state.fractol = Mandlebrot;
+	state.iter = 75;
 	mlx_do_key_autorepeaton(state.mlx_ptr);
 	mlx_hook(state.window, 6, 0, motion_hook, &state);
+	mlx_hook(state.window, 2, 0, key_hook_repeat, &state);
 	mlx_mouse_hook(state.window, mouse_hook, &state);
+	mlx_key_hook(state.window, key_hook, &state);
 	render(&state);
 	mlx_loop(state.mlx_ptr);
 	return (0);

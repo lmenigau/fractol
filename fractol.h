@@ -6,19 +6,20 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 15:55:29 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/09 12:59:51 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/10 20:21:36 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
+# include <stdlib.h>
 # include <mlx.h>
 # define WIN_WIDTH		1000
 # define WIN_HEIGHT		1000
 
 # define ABS(x)		((x) < 0 ? (-(x)): (x))
-# define WIN(x)		(int)(x) + WIN_HEIGHT / 2
+# define WIN(x)		(int)(x + WIN_HEIGHT / 2)
 # define WHITE		0x00FFFFFF
 
 # define RGB		(0xFF * it /iter)
@@ -48,9 +49,12 @@ typedef struct	s_state
 	t_cplex		topleft;
 	t_cplex		botright;
 	t_fractol	fractol;
+	int			iter;
 }				t_state;
 
 int		motion_hook(int x, int y, t_state *state);
 int		mouse_hook(int button, int x, int y, t_state *state);
 void	render(t_state *state);
+int		key_hook(int keycode, t_state *state);
+int		key_hook_repeat(int keycode, t_state *state);
 #endif
