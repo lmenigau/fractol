@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/11 05:53:12 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/11 09:31:40 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	render(t_state *state)
 	int		endian;
 	double	step;
 
+	printf("%d\n", state->iter);
 	img = mlx_new_image(state->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	state->buff = (int (*)[WIN_WIDTH])mlx_get_data_addr(img, &bits, &size,
 			&endian);
@@ -133,7 +134,7 @@ int		main(void)
 	state.zoom = 3;
 	state.center = (t_cplex) {-2, -1.5};
 	state.fractol = Mandlebrot;
-	state.iter = 75;
+	state.iter = 100;
 	mlx_do_key_autorepeaton(state.mlx_ptr);
 	mlx_hook(state.window, 6, 0, motion_hook, &state);
 	mlx_hook(state.window, 2, 0, key_hook_repeat, &state);

@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 15:55:29 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/11 05:43:43 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/11 09:28:03 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define FRACTOL_H
 
 # include <stdlib.h>
+# include <math.h>
 # include <mlx.h>
-# define WIN_WIDTH		800
-# define WIN_HEIGHT		800
+# define WIN_WIDTH		1200
+# define WIN_HEIGHT		1200
 # define ABS(x)			((x) < 0 ? (-(x)): (x))
 
-# define RGB		(0xFF * it /iter)
-# define COL		(RGB) | (RGB * 3 << 8) | (RGB * 7<< 16)
+# define RGB		(0xFF * it / iter)
+# define COL		(RGB) | (RGB << 10) | (RGB << 19)
 
 typedef struct	s_cplex
 {

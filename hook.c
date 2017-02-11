@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 21:40:53 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/11 05:45:50 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/11 09:32:57 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int		key_hook_repeat(int keycode, t_state *state)
 	else if (keycode == 126)
 		state->center.im -= state->zoom / 4;
 	else if (keycode == 38)
-		state->iter += 10;
-	else if (keycode == 40 && state->iter > 0)
-		state->iter -= 10;
+		state->iter += log2(state->iter);
+	else if (keycode == 40 && state->iter > 4)
+		state->iter -= log2(state->iter);
 	else
 		return (0);
 	render(state);
@@ -55,6 +55,7 @@ int		key_hook(int keycode, t_state *state)
 	{
 		state->zoom = 3;
 		state->center = (t_cplex) {-2, -1.5};
+		state->iter = 100;
 	}
 	else
 		return (0);
@@ -68,15 +69,15 @@ int		mouse_hook(int button, int x, int y, t_state *state)
 	t_cplex		z;
 	double		zoom;
 
-	if (button == 1 || button == 4)
+	if ((button == 1 || button == 4) && state->iter > 4)
 	{
 		zoom = 2.00;
-		state->iter -= 5;
+		state->iter -= log2(state->iter);
 	}
 	else if (button == 2 || button == 5)
 	{
 		zoom = 0.50;
-		state->iter += 5;
+		state->iter += log2(state->iter);
 	}
 	else
 		return (0);
