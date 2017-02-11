@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 21:40:53 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/11 00:00:45 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/11 04:58:46 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 
 int		 motion_hook(int x, int y, t_state *state)
 {
-	state->c.real = (x) / (double)WIN_HEIGHT * state->zoom + state->center.real;
-	state->c.im = (y ) / (double)WIN_HEIGHT * state->zoom + state->center.im;
-	render(state);
+	state->c.real = x / (double)WIN_HEIGHT * state->zoom + state->center.real;
+	state->c.im = y / (double)WIN_HEIGHT * state->zoom + state->center.im;
+	if (state->fractol == Julia)
+		render(state);
 	return (0);
 }
 
 int		key_hook_repeat(int keycode, t_state *state)
 {
+	printf("key		%d\n", keycode);
 	if (keycode == 123)
 		state->center.real -= state->zoom / 4;
 	else if (keycode == 124)
@@ -33,8 +35,10 @@ int		key_hook_repeat(int keycode, t_state *state)
 		state->center.im -= state->zoom / 4;
 	else if (keycode == 38)
 		state->iter += 10;
-	else if (keycode == 40)
+	else if (keycode == 40 && state->iter > 0)
 		state->iter -= 10;
+	else
+		return (0);
 	render(state);
 	return(0);
 }
@@ -49,6 +53,13 @@ int		key_hook(int keycode, t_state *state)
 		state->fractol = Julia;
 	else if (keycode == 85)
 		state->fractol = Burning_sheep;
+	else if(keycode == 49)
+	{
+		state->zoom = 3;
+		state->center = (t_cplex) {-2, -1.5};
+	}
+	else
+		return (0);
 	render(state);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 15:55:29 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/11 00:04:04 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/11 04:39:34 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ typedef struct	s_state
 	int			(*buff)[WIN_WIDTH];
 	t_cplex		c;
 	t_cplex		center;
-	t_cplex		topleft;
-	t_cplex		botright;
 	t_fractol	fractol;
 	int			iter;
 }				t_state;
