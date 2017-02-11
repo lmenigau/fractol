@@ -6,14 +6,14 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/11 05:00:29 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/11 05:53:12 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include <unistd.h>
 
-void	mandlebrot(t_state *state, double zoom, double step, int iter)
+void	mandlebrot(t_state *state, double zoom, t_cplex center, int iter)
 {
 	double	swap;
 	t_cplex	c;
@@ -28,8 +28,8 @@ void	mandlebrot(t_state *state, double zoom, double step, int iter)
 		while (++xy.x < WIN_HEIGHT)
 		{
 			it = -1;
-			c.im = xy.y / (double)WIN_HEIGHT * zoom + state->center.im;
-			c.real = xy.x / (double)WIN_HEIGHT * zoom  + state->center.real;
+			c.im = xy.y / (double)WIN_HEIGHT * zoom + center.im;
+			c.real = xy.x / (double)WIN_HEIGHT * zoom + center.real;
 			z = (t_cplex){0, 0};
 			while (z.real * z.real + z.im * z.im < 4 && ++it < iter)
 			{
@@ -37,41 +37,41 @@ void	mandlebrot(t_state *state, double zoom, double step, int iter)
 				z.im = z.real * z.im + z.im * z.real + c.im;
 				z.real = swap;
 			}
-			(it != iter) ? state->buff[xy.y] [xy.x] = COL : (1);
+			(it != iter) ? state->buff[xy.y][xy.x] = COL : (1);
 		}
 	}
 }
 
-void	julia(t_state *state, double zoom, double step, int iter)
+void	julia(t_state *state, double zoom, t_cplex center, int iter)
 {
 	double	swap;
-	t_cplex	z;
 	t_cplex	s;
+	t_cplex	c;
 	int		it;
 	t_vec2	xy;
 
+	c = state->c;
 	xy.y = -1;
 	while (++xy.y < WIN_HEIGHT)
 	{
 		xy.x = -1;
 		while (++xy.x < WIN_HEIGHT)
 		{
-			it = 0;
-			state->buff[xy.y] [xy.x] = 0 ;
-			s.im = (xy.y) / (double)WIN_HEIGHT * zoom + state->center.im;
-			s.real = (xy.x) / (double)WIN_HEIGHT * zoom  + state->center.real;
-			while ( s.real * s.real + s.im * s.im < 4 && it++ < iter)
+			it = -1;
+			s.im = (xy.y) / (double)WIN_HEIGHT * zoom + center.im;
+			s.real = (xy.x) / (double)WIN_HEIGHT * zoom + center.real;
+			while (++it < iter && s.real * s.real + s.im * s.im < 4)
 			{
-				swap = s.real * s.real - s.im * s.im + state->c.real;
-				s.im = s.real * s.im + s.im * s.real + state->c.im;
+				swap = s.real * s.real - s.im * s.im + c.real;
+				s.im = s.real * s.im + s.im * s.real + c.im;
 				s.real = swap;
 			}
-			(it != iter) ? state->buff[xy.y] [xy.x] = COL: (1);
+			(it != iter) ? state->buff[xy.y][xy.x] = COL : (1);
 		}
 	}
 }
 
-void	burning_sheep(t_state *state, double zoom, double step, int iter)
+void	burning_sheep(t_state *state, double zoom, t_cplex center, int iter)
 {
 	double	swap;
 	t_cplex	c;
@@ -86,16 +86,16 @@ void	burning_sheep(t_state *state, double zoom, double step, int iter)
 		while (++xy.x < WIN_HEIGHT)
 		{
 			it = -1;
-			c.im = xy.y / (double)WIN_HEIGHT *zoom + state->center.im;
-			c.real = xy.x / (double)WIN_HEIGHT * zoom  + state->center.real;
+			c.im = xy.y / (double)WIN_HEIGHT * zoom + center.im;
+			c.real = xy.x / (double)WIN_HEIGHT * zoom + center.real;
 			z = (t_cplex){0, 0};
 			while (z.real * z.real + z.im * z.im < 4 && ++it < iter)
 			{
 				swap = ABS(z.real * z.real) - ABS(z.im * z.im) + c.real;
-				z.im = ABS(z.real * z.im)+ ABS(z.im * z.real) + c.im;
+				z.im = ABS(z.real * z.im) + ABS(z.im * z.real) + c.im;
 				z.real = swap;
 			}
-			(it != iter) ? state->buff[xy.y] [xy.x] = COL : (1);
+			(it != iter) ? state->buff[xy.y][xy.x] = COL : (1);
 		}
 	}
 }
@@ -111,20 +111,19 @@ void	render(t_state *state)
 	img = mlx_new_image(state->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	state->buff = (int (*)[WIN_WIDTH])mlx_get_data_addr(img, &bits, &size,
 			&endian);
-	step = (2 * state->zoom) / (double)WIN_HEIGHT ;
+	step = (2 * state->zoom) / (double)WIN_HEIGHT;
 	if (state->fractol == Mandlebrot)
-		mandlebrot(state, state->zoom, step, state->iter);
+		mandlebrot(state, state->zoom, state->center, state->iter);
 	else if (state->fractol == Julia)
-		julia(state, state->zoom, step, state->iter);
+		julia(state, state->zoom, state->center, state->iter);
 	else
-		burning_sheep(state, state->zoom, step, state->iter);
+		burning_sheep(state, state->zoom, state->center, state->iter);
 	mlx_put_image_to_window(state->mlx_ptr, state->window, img, 0, 0);
 	mlx_destroy_image(state->mlx_ptr, img);
-	printf("%d\n", state->iter);
 	state->buff = NULL;
 }
 
-int		main(int argc, char **argv)
+int		main(void)
 {
 	t_state	state;
 

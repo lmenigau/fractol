@@ -6,14 +6,13 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 21:40:53 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/11 04:58:46 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/11 05:45:50 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "fractol.h"
 
-int		 motion_hook(int x, int y, t_state *state)
+int		motion_hook(int x, int y, t_state *state)
 {
 	state->c.real = x / (double)WIN_HEIGHT * state->zoom + state->center.real;
 	state->c.im = y / (double)WIN_HEIGHT * state->zoom + state->center.im;
@@ -24,7 +23,6 @@ int		 motion_hook(int x, int y, t_state *state)
 
 int		key_hook_repeat(int keycode, t_state *state)
 {
-	printf("key		%d\n", keycode);
 	if (keycode == 123)
 		state->center.real -= state->zoom / 4;
 	else if (keycode == 124)
@@ -40,7 +38,7 @@ int		key_hook_repeat(int keycode, t_state *state)
 	else
 		return (0);
 	render(state);
-	return(0);
+	return (0);
 }
 
 int		key_hook(int keycode, t_state *state)
@@ -53,7 +51,7 @@ int		key_hook(int keycode, t_state *state)
 		state->fractol = Julia;
 	else if (keycode == 85)
 		state->fractol = Burning_sheep;
-	else if(keycode == 49)
+	else if (keycode == 49)
 	{
 		state->zoom = 3;
 		state->center = (t_cplex) {-2, -1.5};
@@ -66,9 +64,9 @@ int		key_hook(int keycode, t_state *state)
 
 int		mouse_hook(int button, int x, int y, t_state *state)
 {
-	t_cplex a;
-	t_cplex z;
-	double zoom;
+	t_cplex		a;
+	t_cplex		z;
+	double		zoom;
 
 	if (button == 1 || button == 4)
 	{
@@ -87,7 +85,7 @@ int		mouse_hook(int button, int x, int y, t_state *state)
 	state->zoom *= zoom;
 	z = state->center;
 	z.real = zoom * (z.real - a.real) + a.real;
-	z.im  = zoom * (z.im - a.im) + a.im ;
+	z.im = zoom * (z.im - a.im) + a.im;
 	state->center = z;
 	render(state);
 	return (0);
