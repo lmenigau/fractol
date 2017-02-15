@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 21:40:53 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/11 09:32:57 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 06:10:48 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int		motion_hook(int x, int y, t_state *state)
 {
 	state->c.real = x / (double)WIN_HEIGHT * state->zoom + state->center.real;
 	state->c.im = y / (double)WIN_HEIGHT * state->zoom + state->center.im;
-	if (state->fractol == Julia)
-		render(state);
+	if (state->func == julia)
+		mt_render(state);
 	return (0);
 }
 
@@ -37,7 +37,7 @@ int		key_hook_repeat(int keycode, t_state *state)
 		state->iter -= log2(state->iter);
 	else
 		return (0);
-	render(state);
+	mt_render(state);
 	return (0);
 }
 
@@ -46,11 +46,11 @@ int		key_hook(int keycode, t_state *state)
 	if (keycode == 53)
 		exit(0);
 	if (keycode == 83)
-		state->fractol = Mandlebrot;
+		state->func = mandlebrot;
 	else if (keycode == 84)
-		state->fractol = Julia;
+		state->func = julia;
 	else if (keycode == 85)
-		state->fractol = Burning_sheep;
+		state->func = burning_ship;
 	else if (keycode == 49)
 	{
 		state->zoom = 3;
@@ -59,7 +59,7 @@ int		key_hook(int keycode, t_state *state)
 	}
 	else
 		return (0);
-	render(state);
+	mt_render(state);
 	return (0);
 }
 
@@ -88,6 +88,6 @@ int		mouse_hook(int button, int x, int y, t_state *state)
 	z.real = zoom * (z.real - a.real) + a.real;
 	z.im = zoom * (z.im - a.im) + a.im;
 	state->center = z;
-	render(state);
+	mt_render(state);
 	return (0);
 }
