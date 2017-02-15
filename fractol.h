@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 15:55:29 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 15:32:55 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 16:02:04 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <mlx.h>
 # define WIN_WIDTH		1000
 # define WIN_HEIGHT		1000
-# define ABS(x)			((x) < 0 ? (-(x)): (x))
 
 typedef struct	s_cplex
 {
