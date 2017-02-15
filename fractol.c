@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 16:43:59 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 17:04:38 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	mt_render(t_state *state)
 void	parse_arg(t_state *state, int argc, char **argv)
 {
 	int		frac;
+
 	if (argc != 2)
 	{
 		ft_putstr("1- mandlebrot\n2- julia\n3- burning_ship\n");
@@ -94,7 +95,8 @@ void	parse_arg(t_state *state, int argc, char **argv)
 		state->func = julia;
 	else if (frac == 3)
 		state->func = burning_ship;
-	else {
+	else
+	{
 		ft_putstr("1- mandlebrot\n2- julia\n3- burning_ship\n");
 		exit(0);
 	}
