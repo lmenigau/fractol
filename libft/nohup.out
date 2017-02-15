@@ -1,0 +1,19 @@
+Couldn't load XPCOM.
+1484248256991	addons.webextension.jid1-MnnxcxisBPnSXQ@jetpack	WARN	Loading extension 'jid1-MnnxcxisBPnSXQ@jetpack': Reading manifest: Error processing author: Expected string instead of {"email":"eff.software.projects@gmail.com"}
+1484248257007	addons.webextension.jid1-MnnxcxisBPnSXQ@jetpack	WARN	Loading extension 'jid1-MnnxcxisBPnSXQ@jetpack': Reading manifest: Error processing permissions.9: Unknown permission "privacy"
+1484248257009	addons.webextension.jid1-MnnxcxisBPnSXQ@jetpack	WARN	Loading extension 'jid1-MnnxcxisBPnSXQ@jetpack': Reading manifest: Error processing options_page: An unexpected property was found in the WebExtension manifest.
+1484248257070	addons.webextension.jid1-MnnxcxisBPnSXQ@jetpack	WARN	Please specify whether you want browser_style or not in your browser_action options.
+2017-01-12 20:11:01.567 plugin-container[67972:8765742] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x953b, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-01-12 20:11:01.567 plugin-container[67972:8765742] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x9b0b, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-01-12 20:11:01.567 plugin-container[67972:8765742] void __CFPasteboardSetup() : Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+2017-01-12 20:11:57.825 plugin-container[68023:8766021] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x953f, name = 'com.apple.tsm.portname'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-01-12 20:11:57.826 plugin-container[68023:8766021] *** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x5417, name = 'com.apple.CFPasteboardClient'
+See /usr/include/servers/bootstrap_defs.h for the error codes.
+2017-01-12 20:11:57.826 plugin-container[68023:8766021] void __CFPasteboardSetup() : Failed to allocate communication port for com.apple.CFPasteboardClient; this is likely due to sandbox restrictions
+GVA info: Successfully connected to the Intel plugin, offline Gen7 
+Promise resolved after context unloaded
+Promise resolved after context unloaded
+Promise resolved after context unloaded
