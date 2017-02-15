@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 13:08:13 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 14:49:19 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	pixel(t_state *state, t_vec2 start, t_img buff, int iter)
 			c.real = (start.x + xy.x) / (double)WIN_HEIGHT * state->zoom +
 				center.real;
 			it = state->func(state, c, iter);
-			col= it * 0xFF / iter;
+			col = it * 0xFF / iter;
 			if (it != iter)
 				buff[xy.y][xy.x] = (col) | (col << 10) | (col << 19);
 		}

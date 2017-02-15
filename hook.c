@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 21:40:53 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 13:42:36 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 15:17:35 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		motion_hook(int x, int y, t_state *state)
 {
 	state->c.real = x / (double)WIN_HEIGHT * state->zoom + state->center.real;
 	state->c.im = y / (double)WIN_HEIGHT * state->zoom + state->center.im;
-	//if (state->func == julia)
+	if (state->func == julia || state->func == biomorph)
 		mt_render(state);
 	return (0);
 }
@@ -39,8 +39,6 @@ int		key_hook_repeat(int keycode, t_state *state)
 		state->power++;
 	else if (keycode == 35 && state->power > 0)
 		state->power--;
-	else
-		return (0);
 	mt_render(state);
 	return (0);
 }
@@ -69,8 +67,6 @@ int		key_hook(int keycode, t_state *state)
 		state->center = (t_cplex) {-2, -1.5};
 		state->iter = 100;
 	}
-	else
-		return (0);
 	mt_render(state);
 	return (0);
 }
