@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 14:49:19 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 16:43:59 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,37 @@ void	mt_render(t_state *state)
 	pthread_join(t[3], NULL);
 }
 
-int		main(void)
+void	parse_arg(t_state *state, int argc, char **argv)
+{
+	int		frac;
+	if (argc != 2)
+	{
+		ft_putstr("1- mandlebrot\n2- julia\n3- burning_ship\n");
+		exit(0);
+	}
+	frac = ft_atoi(argv[1]);
+	if (frac == 1)
+		state->func = mandlebrot;
+	else if (frac == 2)
+		state->func = julia;
+	else if (frac == 3)
+		state->func = burning_ship;
+	else {
+		ft_putstr("1- mandlebrot\n2- julia\n3- burning_ship\n");
+		exit(0);
+	}
+}
+
+int		main(int argc, char **argv)
 {
 	t_state	state;
 
+	parse_arg(&state, argc, argv);
 	state.mlx_ptr = mlx_init();
 	state.window = mlx_new_window(state.mlx_ptr, WIN_WIDTH, WIN_HEIGHT,
 			"fractol");
 	state.zoom = 3;
 	state.center = (t_cplex) {-2, -1.5};
-	state.func = mandlebrot;
 	state.iter = 100;
 	state.power = 3;
 	mlx_do_key_autorepeaton(state.mlx_ptr);

@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 15:55:29 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 16:02:04 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 16:47:01 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <pthread.h>
 # include <math.h>
 # include <mlx.h>
+# include "libft.h"
+
 # define WIN_WIDTH		1000
 # define WIN_HEIGHT		1000
 
