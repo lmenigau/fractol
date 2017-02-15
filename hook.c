@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 21:40:53 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 06:10:48 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 11:00:22 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ int		key_hook_repeat(int keycode, t_state *state)
 		state->iter += log2(state->iter);
 	else if (keycode == 40 && state->iter > 4)
 		state->iter -= log2(state->iter);
+	else if (keycode == 31)
+		state->power++;
+	else if (keycode == 35 && state->power > 0)
+		state->power--;
 	else
 		return (0);
 	mt_render(state);
@@ -51,6 +55,12 @@ int		key_hook(int keycode, t_state *state)
 		state->func = julia;
 	else if (keycode == 85)
 		state->func = burning_ship;
+	else if (keycode == 86)
+		state->func = fract0;
+	else if (keycode == 87)
+		state->func = mandlebrot_pow;
+	else if (keycode == 88)
+		state->func = cactus;
 	else if (keycode == 49)
 	{
 		state->zoom = 3;
