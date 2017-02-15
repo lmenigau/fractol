@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/06 17:22:28 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 17:04:38 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 17:18:42 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	parse_arg(t_state *state, int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_putstr("1- mandlebrot\n2- julia\n3- burning_ship\n");
+		ft_putstr("1) mandlebrot\n2) julia\n3) burning_ship\n4) cactus\n"
+				"5) biomorph\n");
 		exit(0);
 	}
 	frac = ft_atoi(argv[1]);
@@ -95,9 +96,14 @@ void	parse_arg(t_state *state, int argc, char **argv)
 		state->func = julia;
 	else if (frac == 3)
 		state->func = burning_ship;
+	else if (frac == 4)
+		state->func = cactus;
+	else if (frac == 5)
+		state->func = biomorph;
 	else
 	{
-		ft_putstr("1- mandlebrot\n2- julia\n3- burning_ship\n");
+		ft_putstr("1) mandlebrot\n2) julia\n3) burning_ship\n4) cactus\n"
+				"5) biomorph\n");
 		exit(0);
 	}
 }
