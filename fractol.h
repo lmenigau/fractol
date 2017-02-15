@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 15:55:29 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 10:42:50 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 13:40:36 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,5 @@ t_cplex			power(t_cplex a, int b);
 t_cplex			sub(t_cplex a, t_cplex b);
 int				mandlebrot_pow(t_state *state, t_cplex c, int iter);
 int				cactus(t_state *state, t_cplex c, int iter);
+int				biomorph(t_state *state, t_cplex s, int iter);
 #endif

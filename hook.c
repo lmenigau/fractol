@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 21:40:53 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 11:00:22 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 13:42:36 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		motion_hook(int x, int y, t_state *state)
 {
 	state->c.real = x / (double)WIN_HEIGHT * state->zoom + state->center.real;
 	state->c.im = y / (double)WIN_HEIGHT * state->zoom + state->center.im;
-	if (state->func == julia)
+	//if (state->func == julia)
 		mt_render(state);
 	return (0);
 }
@@ -61,6 +61,8 @@ int		key_hook(int keycode, t_state *state)
 		state->func = mandlebrot_pow;
 	else if (keycode == 88)
 		state->func = cactus;
+	else if (keycode == 89)
+		state->func = biomorph;
 	else if (keycode == 49)
 	{
 		state->zoom = 3;

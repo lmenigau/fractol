@@ -6,7 +6,7 @@
 /*   By: lmenigau <lmenigau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 06:48:22 by lmenigau          #+#    #+#             */
-/*   Updated: 2017/02/15 11:02:58 by lmenigau         ###   ########.fr       */
+/*   Updated: 2017/02/15 13:39:28 by lmenigau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,21 @@ int		mandlebrot_pow(t_state *state, t_cplex c, int iter)
 		z = tmp;
 	}
 	return (it);
+}
+
+int		biomorph(t_state *state, t_cplex s, int iter)
+{
+	t_cplex	c;
+	t_cplex	tmp;
+	int		it;
+
+	c = state->c;
+	it = -1;
+	while (++it < iter && (ABS(s.real) < 2 && ABS(s.im) < 2))
+	{
+		s = add(power(s, state->power), c);
+	}
+	return (ABS(s.im * s.real) *it);
 }
 
 int		mandlebrot(t_state *state, t_cplex c, int iter)
